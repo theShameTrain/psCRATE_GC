@@ -8,7 +8,7 @@ Import-Module "msonline"
 If (!$SyncHash.cred) {
 
     $encPassword = "76492d1116743f0423413b16050a5345MgB8ADMANABsADkAVgBoAEoAdQBxAGwATQBTADYATwA1AFkAcABMAFoAdABBAFEAPQA9AHwAYwBlAGYAZgA1ADcAMQAxAGIAZAAwAGYAOABjAGIAOABmADkANgA0AGUANgA3ADUAZAA5AGQANgA5ADIAYQBlADcAMABmADkAYgA2ADAAOQBhADAAMgA0ADcAOQA0ADQANQBlAGQAMgBhAGEAOAAyAGQAYQA3ADMAOABjADUAOABjAGMAZABhADEAYwBmADYAMAA2AGYANQA3AGEAZQA1ADYAMgBjAGIAZQA0ADUAYwA2ADQAMwBiAGQANgBhADIA"
-    $key = Get-Content ($SyncHash.scriptRoot + "\resources\Key\AESkey.aes")
+    $key = Get-Content ($SyncHash.keyStore + "\AESkey.aes")
     $SyncHash.msolCred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "shamus.berube@georgiancollege.onmicrosoft.com", ($encPassword | ConvertTo-SecureString -Key $key)
 }
 
