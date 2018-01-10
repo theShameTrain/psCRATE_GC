@@ -1,0 +1,76 @@
+<Controls:MetroWindow 
+	xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+	Title="o365" 
+	WindowStartupLocation="CenterScreen"
+	ShowInTaskbar="true" ShowMinButton="False" ShowMaxRestoreButton="False"
+	SizeToContent="WidthAndHeight" AllowsTransparency="True" >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+	
+	<Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+
+                    <Rectangle Width="20" Height="20" Fill="White" Margin="5">
+						<Rectangle.OpacityMask>
+							<VisualBrush Visual="{iconPacks:PackIconMaterial EmailOutline}" Stretch="Uniform"/>
+						</Rectangle.OpacityMask>
+					</Rectangle>
+
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+	
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Name="o365_FlyOutContent" Position="Left" Width="620" Theme="Accent" Grid.RowSpan="4" IsPinned="False" Margin="500,0,0,0" CloseButtonVisibility="Hidden" Visibility="Collapsed" >
+                <Grid>
+					<Button x:Name="o365_but_flClose" Width="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Background="Transparent" Height="30" Style="{DynamicResource MetroCircleButtonStyle}" Margin="5">
+						<Rectangle Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White">
+							<Rectangle.OpacityMask>
+								<VisualBrush Stretch="Fill" Visual="{iconPacks:PackIconMaterial ArrowLeftBoldCircle}"/>
+							</Rectangle.OpacityMask>
+						</Rectangle>
+					</Button>
+					<StackPanel Orientation="Vertical">
+						<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Left" Margin="0,0,0,0">
+							<Label Name="o365_lbl_UPN" Content="UPN" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Foreground="White" HorizontalContentAlignment="Right"/>
+							<TextBox Name="o365_tb_UPN" HorizontalAlignment="Left" Height="23" Margin="15,10,0,0" VerticalAlignment="Top" Width="505"/>
+						</StackPanel>
+						<StackPanel Name="o365_spResults" Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Left" Margin="10">
+							<ListView Name="o365_listResults" Height="260" Width="560" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+								<ListView.View>
+									<GridView>
+										<GridViewColumn Header="UserID" Width="280" DisplayMemberBinding="{Binding ID}" />
+										<GridViewColumn Header="Access" Width="280" DisplayMemberBinding="{Binding ACCESS}" />
+									</GridView>
+								</ListView.View>
+							</ListView>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+
+    <Grid Name="o365_gridSwitches" HorizontalAlignment="Left">
+		<StackPanel Orientation="Vertical">
+			<Controls:ToggleSwitch Name="o365_tog1" Content="Get Mailbox Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+			<Controls:ToggleSwitch Name="o365_tog2" Content="Get SendAs Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+			<Controls:ToggleSwitch Name="o365_tog3" Content="Get SendOnBehalf Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+			<Controls:ToggleSwitch Name="o365_tog4" Content="Get Calendar Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+			<Controls:ToggleSwitch Name="o365_tog5" Content="Get TEST" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+		</StackPanel>
+    </Grid>
+	
+</Controls:MetroWindow>

@@ -1,0 +1,54 @@
+﻿<Controls:MetroWindow
+	xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+	Title="MainWindow" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+	ShowInTaskbar ="true" ShowTitleBar="False" ShowCloseButton="True" ShowMaxRestoreButton="False" ShowMinButton="False"
+	Width="312" Height="300" SizeToContent="WidthAndHeight"  AllowsTransparency="True">
+	<Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Steel.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+		<Label Name="Main_lbl_Title" Content="psCrate Main Window" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontWeight="Light" FontSize="36" Foreground="#c4bfb6" />
+        <WrapPanel Name="wpMainTiles" HorizontalAlignment="Left" Margin="0,58,0,0" VerticalAlignment="Top" Width="420">
+			<Controls:Tile Name="tile_o365" Width="100" Height="100" Foreground="White" Title="o365" TitleFontSize="12" FontWeight="Light">
+				<Controls:Tile.Resources>
+					<ResourceDictionary>
+						<ResourceDictionary.MergedDictionaries>
+							<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml" />
+						</ResourceDictionary.MergedDictionaries>
+					</ResourceDictionary>
+				</Controls:Tile.Resources>
+                <Rectangle Width="50" Height="50" Fill="White">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:PackIconMaterial EmailOutline}" Stretch="Uniform"/>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Controls:Tile>
+            <Controls:Tile Name="tile_DepartmentFolders" Width="200" Height="100" Foreground="White" Title="Department Folders" TitleFontSize="12" FontWeight="Light" >
+				<Controls:Tile.Resources>
+					<ResourceDictionary>
+						<ResourceDictionary.MergedDictionaries>
+							<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Sienna.xaml" />
+						</ResourceDictionary.MergedDictionaries>
+					</ResourceDictionary>
+				</Controls:Tile.Resources>
+                <Rectangle Width="50" Height="50" Fill="White">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:PackIconMaterial FolderAccount}" Stretch="Uniform"/>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Controls:Tile>	
+		</WrapPanel>
+    </Grid>
+
+</Controls:MetroWindow> 
