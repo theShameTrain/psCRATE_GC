@@ -7,6 +7,7 @@ The idea for this is that every toolset will run as a service account that allow
 ## TODO
 + Control tiles via group membership
 
+---
 
 ### TOOLS
 Current items:
@@ -21,7 +22,7 @@ Current items:
 + Create Self Service Folder
 
 
----
+
 
 ### Configuration
 \resources\XML\Config.xml  
