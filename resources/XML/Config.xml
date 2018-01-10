@@ -2,4 +2,5 @@
 <Settings>
 	<keyStore>"path\to\keyStore"</keyStore>
 	<msolUser>"username@org.onmicrosoft.com"</msolUser>
+	<deptRoot>\\UNC\departments</deptRoot>
 </Settings>

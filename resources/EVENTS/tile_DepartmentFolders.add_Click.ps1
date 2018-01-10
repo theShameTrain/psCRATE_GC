@@ -105,7 +105,7 @@ $PowerShell = [PowerShell]::Create().AddScript({
     
     #DepartmentFolders Window Loaded
     $syncHash.Departmentfolders_Window.Add_Loaded({
-		$SyncHash.departmentfolders_Root =  "\\bafileadm01\departments"
+		$SyncHash.departmentfolders_Root =  $SyncHash.config.Settings.deptRoot
         #$syncHash.DeaprtmentFolders.tb_PATH.Text = $SyncHash.departmentfolders_Root
         #$dirList = Get-ChildItem $SyncHash.departmentfolders_Root | Where-Object {$_.PSIsContainer}
 	    #$dirList |sort Name| foreach {
