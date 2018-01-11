@@ -6,10 +6,8 @@ Import-Module "msonline"
 
 #Get the connection credentials
 If (!$SyncHash.cred) {
-
-    $encPassword = "76492d1116743f0423413b16050a5345MgB8ADMANABsADkAVgBoAEoAdQBxAGwATQBTADYATwA1AFkAcABMAFoAdABBAFEAPQA9AHwAYwBlAGYAZgA1ADcAMQAxAGIAZAAwAGYAOABjAGIAOABmADkANgA0AGUANgA3ADUAZAA5AGQANgA5ADIAYQBlADcAMABmADkAYgA2ADAAOQBhADAAMgA0ADcAOQA0ADQANQBlAGQAMgBhAGEAOAAyAGQAYQA3ADMAOABjADUAOABjAGMAZABhADEAYwBmADYAMAA2AGYANQA3AGEAZQA1ADYAMgBjAGIAZQA0ADUAYwA2ADQAMwBiAGQANgBhADIA"
-    $key = Get-Content ($SyncHash.keyStore + "\AESkey.aes")
-    $SyncHash.msolCred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "shamus.berube@georgiancollege.onmicrosoft.com", ($encPassword | ConvertTo-SecureString -Key $key)
+    $key = Get-Content ($SyncHash.config.Settings.general.keyStore + "\AESkey.aes")
+    $SyncHash.msolCred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $SyncHash.config.Settings.o365.msolUser, ($SyncHash.config.Settings.o365.encPassword | ConvertTo-SecureString -Key $key)
 }
 
 #Connect to AzureAD
@@ -143,9 +141,9 @@ $PowerShell = [PowerShell]::Create().AddScript({
         if (($_.Key -eq "Return")) {
             $syncHash.o365_listResults.Items.Clear()
             
-            #Add email suffix if no '@' in text 
+            #Add email suffix if no '@' in supplied text 
             if (!($syncHash.o365_tb_UPN.Text).Contains('@') -eq $True) {
-                $syncHash.o365_tb_UPN.Text = $syncHash.o365_tb_UPN.Text + "@georgiancollege.ca"
+                $syncHash.o365_tb_UPN.Text = $syncHash.o365_tb_UPN.Text + $syncHash.config.Settings.o365.emailSuffix
             }
 
             if ($syncHash.o365_tog1.IsChecked) {  #GetMailBoxPermissions                                    

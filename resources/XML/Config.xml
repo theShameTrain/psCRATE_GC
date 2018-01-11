@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <Settings>
-	<keyStore>"path\to\keyStore"</keyStore>
-	<msolUser>"username@org.onmicrosoft.com"</msolUser>
-	<deptRoot>\\UNC\departments</deptRoot>
+	<general>
+		<keyStore>c:\keyStore</keyStore>
+	</general>
+	<o365>
+		<msolUser>service.accountName@organization.onmicrosoft.com</msolUser>
+		<encPassword>encryptedStringfromAESencryption=</encPassword>
+		<emailSuffix>@youremail.suffix.com</emailSuffix>
+	</o365>
+	<deptfolders>
+		<deptRoot>\\UNCpath\toselfservicefolders</deptRoot>
+	</deptfolders>
 </Settings>
