@@ -50,43 +50,6 @@ $PowerShell = [PowerShell]::Create().AddScript({
 
     #endregion FUNCTIONS
 
-<#
-    #region SplashScreen
-    #Create a splash screen in a seperate runspace so it shows while the rest of the script is loading
-    $hash = [hashtable]::Synchronized(@{})
-    $hash.scriptRoot = $syncHash.scriptRoot  #Pass the base directory (scriptRoot) to the runspace
-    $runspace = [runspacefactory]::CreateRunspace()
-    $runspace.ApartmentState = "STA"
-    $Runspace.ThreadOptions = "ReuseThread"
-    $runspace.Open()
-    $runspace.SessionStateProxy.SetVariable("hash",$hash) 
-    $Pwshell = [PowerShell]::Create()
-
-    $Pwshell.AddScript({
-        #Load the Main XAML from file
-        $xamlLoader = (New-Object System.Xml.XmlDocument)
-        $xamlLoader.Load($hash.scriptRoot + "\resources\XML\Splash.xaml")
-
-        $reader=(New-Object System.Xml.XmlNodeReader $xamlLoader) 
-        $hash.WindowSplash = [Windows.Markup.XamlReader]::Load($reader)
-	            
-        $xamlLoader.SelectNodes("//*[@*[contains(translate(name(.),'n','N'),'Name')]]") | ForEach-Object{
-            #Find all of the form types and add them as members to the synchash
-            $Hash.Add($_.Name,$Hash.WindowSplash.FindName($_.Name) )
-        }
-                               
-        $hash.lblTitle.Content = "Loading Exchange Management Shell"
-        $hash.LoadingLabel.Content = "Please Wait" 
-        $hash.WindowSplash.ShowDialog() 
-    
-    }) | Out-Null
-
-    #endregion SplashScreen
-
-    #Start the splash screen while the rest of the script loads
-    Start-SplashScreen
-#>
- 
     #Load the XAML from file
     $xamlLoader = (New-Object System.Xml.XmlDocument)
     $xamlLoader.Load($SyncHash.scriptRoot + "\resources\XML\DepartmentFolders.xaml")
@@ -105,12 +68,8 @@ $PowerShell = [PowerShell]::Create().AddScript({
     
     #DepartmentFolders Window Loaded
     $syncHash.Departmentfolders_Window.Add_Loaded({
-		$SyncHash.departmentfolders_Root =  $SyncHash.config.Settings.deptRoot
-        #$syncHash.DeaprtmentFolders.tb_PATH.Text = $SyncHash.departmentfolders_Root
-        #$dirList = Get-ChildItem $SyncHash.departmentfolders_Root | Where-Object {$_.PSIsContainer}
-	    #$dirList |sort Name| foreach {
-		#    $syncHash.DepartmentFolders_treeView.Items.Add( $_)
-        #}
+		$SyncHash.departmentfolders_Root =  $SyncHash.config.Settings.deptfolders.deptRoot
+ 
     })
 
     #Open the Flyout when the toggle is switched on and disable the Grid to prevent multiple toggles being selected
@@ -143,14 +102,16 @@ $PowerShell = [PowerShell]::Create().AddScript({
 
     $SyncHash.departmentFolders_treeView.add_MouseDoubleClick({
        
-
             $dir = $SyncHash.departmentFolders_treeView.SelectedItem.FullName
             $SyncHash.departmentFolders_tb_PATH.Text = $dir
             $SyncHash.departmentFolders_treeView.Items.Clear()
         
-            #Add a dir UP button if not at the Directory root
+            #Add a dir UP button if not at the Directory root (Prevents user from browsing up from root dir)
+            #the number specified used is the total count of '\' in the UNC path to the root dir, because 
+            #the UNC path starts with '\\' the count should be one more than the folder levels. 
+            #Do not use a trailing '\' in the deptRoot config
     
-            if ((Split-path $dir).Split('\').Count -gt 3) {
+            if (($dir.ToCharArray() | Where-Object {$_ -eq '\'}).Count -gt (($syncHash.config.Settings.deptfolders.deptRoot).ToCharArray() | Where-Object {$_ -eq '\'}).Count) {
                 $customObject = [PSCustomObject]@{
                     FullName = (Split-Path $dir)
                     Name = ".."
@@ -160,11 +121,10 @@ $PowerShell = [PowerShell]::Create().AddScript({
 
             $dirList = Get-ChildItem $dir | Where-Object {$_.PSIsContainer}
 	        $dirList |sort Name| foreach {
-		        #$observableCollection.Add( $_ )
                 $SyncHash.departmentFolders_treeView.Items.Add( $_ )
 	        }
 	    
-            if (($dir.Split('\').Count) -ge 6) {
+            if (($dir.ToCharArray() | Where-Object {$_ -eq '\'}).Count -ge $SyncHash.config.Settings.deptfolders.shareLevel) { #Turn on the OK button when the user has selected a folder at the proper level (ie - \\Root\Share\Department\SHAREDFOLDER)
                 $SyncHash.DepartmentFolders_but_OK.IsEnabled = $true
                 if ($SyncHash.DepartmentFolders_tog2.IsChecked) {
                     $SyncHash.DepartmentFolders_tb_Message.Text = "Self Service folders must be`ncreated at the root of the Department folder."
@@ -179,13 +139,13 @@ $PowerShell = [PowerShell]::Create().AddScript({
     #Flyout OK Button Clicked
     $SyncHash.DepartmentFolders_but_OK.add_Click({
         $SyncHash.DepartmentFolders_treeView.IsEnabled = $false
-        #If the selected path is greater than 6 shorten the path
+        #If the selected path is greater than the shareLevel, adjust the path
         $path = $SyncHash.DepartmentFolders_tb_PATH.Text
-        if (($path).Split('\\').Count -gt 6) {
+        if (($path.ToCharArray() | Where-Object {$_ -eq '\'}).Count -gt $SyncHash.config.Settings.deptfolders.shareLevel) {
             do {
                 $path = Split-Path $path
             }
-            until (($path).Split('\\').Count -eq 6)
+            until (($path.ToCharArray() | Where-Object {$_ -eq '\'}).Count -eq $SyncHash.config.Settings.deptfolders.shareLevel)
             $SyncHash.DepartmentFolders_tb_Message.text = "Self-Service is only Supported on the First Set of Subfolders`n in a Department Folder. Path has been adjusted."
         }
         $SyncHash.DepartmentFolders_tb_PATH.Text = $path

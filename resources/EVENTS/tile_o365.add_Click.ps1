@@ -241,7 +241,7 @@ $PowerShell = [PowerShell]::Create().AddScript({
                 }
 
                 else {
-                    $results = $results | Where-Object {$_.AccessRights -ne "None"} | Where-Object {$_.User -notlike "NT:S-1-5*"} | Select-Object User,AccessRights
+                    $results = $results | Where-Object {$_.AccessRights -ne "None"} | Where-Object {$_.User -notlike "NT:S-1-5*"} | Select-Object User,AccessRights  #Filter out system users 
                     if ($results.User.Count -eq 0) {
                         $newItem = Select-Object -InputObject "" ID,ACCESS
                         $newItem.ACCESS = "No Special Permissions Found"
