@@ -10,5 +10,6 @@
 	</o365>
 	<deptfolders>
 		<deptRoot>\\UNCpath\toselfservicefolders</deptRoot>
+		<shareLevel>5</shareLevel>
 	</deptfolders>
 </Settings>
