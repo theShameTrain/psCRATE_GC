@@ -142,18 +142,17 @@ $parentCODE = [PowerShell]::Create().AddScript( {
         $syncHash.keys | Where-Object {$_ -like "tile*"} | ForEach-Object {
             $syncHash.($_.ToString()).add_Click( {
                 [System.Object]$sender = $args[0].Name.TrimStart("tile_")
-                Invoke-Expression (Get-Content ($syncHash.scriptRoot + "\resources\TILES\" + $sender + "\" + $sender + ".add_click.ps1") -Raw )
+                Invoke-Expression (Get-Content ($syncHash.scriptRoot + "\resources\TILES\" + $sender + "\" + $sender + ".add_Click.ps1") -Raw )
             })
         }
 
         #Window Close Event
-        $syncHash.mainWindow.Add_Closed( {
-                Write-Verbose 'Halt runspace cleanup job processing'
-                $jobCleanup.Flag = $False
+        $syncHash.mainWindow.Add_Closed({
+            $jobCleanup.Flag = $False
 
-                #Stop all runspaces
-                $jobCleanup.PowerShell.Dispose()
-            })
+            #Stop all runspaces
+            $jobCleanup.PowerShell.Dispose()
+        })
 
         #endregion EVENTS
 
@@ -167,4 +166,4 @@ $parentCODE.Runspace = $newRunspace
 $data = $parentCODE.BeginInvoke()
 #Wait for the main window to close then cleanup all the runspaces
 While ($data.IsCompleted -ne $true) {Start-Sleep 0.5}
-Get-Runspace | Where-Object {$_.RunspaceAvailability -ne "Busy"} | ForEach-Object {$_.Dispose()}  
+Get-Runspace | Where-Object {$_.RunspaceAvailability -ne "Busy"} | ForEach-Object {$_.Dispose()}
