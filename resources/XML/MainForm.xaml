@@ -20,34 +20,7 @@
     <Grid Margin="10">
 		<Label Name="Main_lbl_Title" Content="psCrate Main Window" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontWeight="Light" FontSize="36" Foreground="#c4bfb6" />
         <WrapPanel Name="wpMainTiles" HorizontalAlignment="Left" Margin="0,58,0,0" VerticalAlignment="Top" Width="420">
-			<Controls:Tile Name="tile_o365" Width="100" Height="100" Foreground="White" Title="o365" TitleFontSize="12" FontWeight="Light">
-				<Controls:Tile.Resources>
-					<ResourceDictionary>
-						<ResourceDictionary.MergedDictionaries>
-							<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml" />
-						</ResourceDictionary.MergedDictionaries>
-					</ResourceDictionary>
-				</Controls:Tile.Resources>
-                <Rectangle Width="50" Height="50" Fill="White">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Visual="{iconPacks:PackIconMaterial EmailOutline}" Stretch="Uniform"/>
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Controls:Tile>
-            <Controls:Tile Name="tile_DepartmentFolders" Width="200" Height="100" Foreground="White" Title="Department Folders" TitleFontSize="12" FontWeight="Light" >
-				<Controls:Tile.Resources>
-					<ResourceDictionary>
-						<ResourceDictionary.MergedDictionaries>
-							<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Sienna.xaml" />
-						</ResourceDictionary.MergedDictionaries>
-					</ResourceDictionary>
-				</Controls:Tile.Resources>
-                <Rectangle Width="50" Height="50" Fill="White">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Visual="{iconPacks:PackIconMaterial FolderAccount}" Stretch="Uniform"/>
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Controls:Tile>	
+			
 		</WrapPanel>
     </Grid>
 
