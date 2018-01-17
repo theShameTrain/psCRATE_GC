@@ -138,16 +138,13 @@ $parentCODE = [PowerShell]::Create().AddScript( {
 
         #region EVENTS
         
-        #Add the tile Click events which read from $scriptRoot\resources\TILES\<TILENAME>\<TILENAME>.add_Click.ps1
-        
+        #Add the tile Click events which read from $scriptRoot\resources\TILES\<TILENAME>\<TILENAME>.add_Click.ps1     
         $syncHash.keys | Where-Object {$_ -like "tile*"} | ForEach-Object {
             $syncHash.($_.ToString()).add_Click( {
                 [System.Object]$sender = $args[0].Name.TrimStart("tile_")
                 Invoke-Expression (Get-Content ($syncHash.scriptRoot + "\resources\TILES\" + $sender + "\" + $sender + ".add_click.ps1") -Raw )
             })
-            
         }
-
 
         #Window Close Event
         $syncHash.mainWindow.Add_Closed( {
@@ -159,8 +156,6 @@ $parentCODE = [PowerShell]::Create().AddScript( {
             })
 
         #endregion EVENTS
-
-        #>
 
         #Show the GUI running in newRunspace
         $syncHash.mainWindow.ShowDialog() | Out-Null
