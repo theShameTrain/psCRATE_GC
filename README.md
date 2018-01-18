@@ -35,9 +35,23 @@ To add a tile create a folder in \resources\TILES\\_**TILE**_
 + Create loop to wait for Main Runspace to finish
 + When Main Runspace is done Dispose of all runspaces that are not 'Busy"
 
-
-## TODO
-+ Control tiles via group membership
+#### Tile.add_Click.ps1
++ First disable the Tile in the main window so only one child runspace per tile is available
++ Import any Modules that are required for the script 
++ Create a runspace for the child process to run in
++ Add powershell script to runspace
+  + Add Function _**Update-Window**_ that allows updating the window from the new runspace
+  + Add Functions _**close-SplashScreen**_ and _**start-SplashScreen**_ if required
+  + Create runspace for SplashScreen if needed, start splash is required as well
+  + Load XAML for for tile WPF window
+  + Find all 'NAMES' in XAML and set to SyncHash
+  + Add all events for script
+    + Close SplashScreen in _**tile_Window.Add_Loaded**_ if required
+    + In _**tile_Window.Add_Closed**_ :
+      + Enable tile in MainWindow
+      + Remove any items from *$syncHash* that match tile name
+  + Show the Window Dialog
++ Invoke the Parent runspace
 
 ---
 
