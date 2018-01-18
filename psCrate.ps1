@@ -22,12 +22,6 @@ $syncHash.scriptRoot = $PSScriptRoot #Pass the base directory (scriptRoot) to th
 #unremark the following line to enable config in resources
 #[xml]$syncHash.config =  Get-Content ($syncHash.scriptRoot + "\resources\XML\Config.xml")
 
-$newRunspace = [runspacefactory]::CreateRunspace()
-$newRunspace.ApartmentState = "STA"
-$newRunspace.ThreadOptions = "ReuseThread"
-$newRunspace.Open()
-$newRunspace.SessionStateProxy.SetVariable("syncHash", $syncHash)
-
 #region Assemblies to Load
 $assemblyList = @("PresentationFramework", "PresentationCore", "WindowsBase")
 $assemblyList | Foreach-Object {Add-Type -AssemblyName $_}
@@ -37,6 +31,12 @@ Add-Type -Path ($syncHash.scriptRoot + "\assembly\MahApps.Metro.dll")
 Add-Type -Path ($syncHash.scriptRoot + "\assembly\System.Windows.Interactivity.dll")
 Add-Type -Path ($syncHash.scriptRoot + "\assembly\Mahapps.metro.iconpacks.dll")
 #endregion Assemblies
+
+$newRunspace = [runspacefactory]::CreateRunspace()
+$newRunspace.ApartmentState = "STA"
+$newRunspace.ThreadOptions = "ReuseThread"
+$newRunspace.Open()
+$newRunspace.SessionStateProxy.SetVariable("syncHash", $syncHash)
 
 #CODE set to add to the New Runspace
 $parentCODE = [PowerShell]::Create().AddScript( {   
