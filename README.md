@@ -5,9 +5,19 @@ The idea for this is that every toolset will run as a service account that allow
 
 ## Overview
 
-Main script runs in a seperate runspace.  All tiles run is another runspace.
+Main script runs in a seperate runspace.  All tiles run in another runspace.
 
-Main script psCrate.ps1
+To add a tile create a folder in \resources\TILES\\_**TILE**_
+  + Create a config.xml in the _**TILE**_ folder
+     + Config contains Tile Settings for:
+       + Name
+       + Width
+       + Height
+       + Tile Title
+       + Tile Accent Color (See MahApps [Style Guide](http://mahapps.com/guides/styles.html) for color theme options)
+       + Icon (See Mahapps [IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks). The IconBrowser is a great tool!)
+
+#### Main script psCrate.ps1
 + First create a GLOBAL synchronized hashtable
 + Read config from \resources\XML\config.xml
 
