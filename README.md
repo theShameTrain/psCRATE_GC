@@ -20,7 +20,7 @@ To add a tile create a folder in \resources\TILES\\_**TILE**_
 #### Main script psCrate.ps1
 + First create a GLOBAL synchronized hashtable
 + Read config from \resources\XML\config.xml
-  Any organization specific information should reside in this Config
+    + Any organization specific information should reside in this Config
 + Add WPF assemblies and DLL's for [MahApps.Metro](http://mahapps.com/)
 + Create a runspace for the main WPF and sync the SyncHash to the runspace
 + Add powershell script to runspace
