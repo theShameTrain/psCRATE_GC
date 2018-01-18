@@ -18,18 +18,18 @@ $Global:syncHash = [hashtable]::Synchronized(@{})
 #Add some GLOBAL items to the syncHash 
 $syncHash.scriptRoot = $PSScriptRoot #Pass the base directory (scriptRoot) to the runspace
 #for testing use external config file
-[xml]$syncHash.config =  Get-Content ("c:\config\Config.xml")
+[xml]$syncHash.config = Get-Content ("c:\config\Config.xml")
 #unremark the following line to enable config in resources
 #[xml]$syncHash.config =  Get-Content ($syncHash.scriptRoot + "\resources\XML\Config.xml")
 
-$newRunspace =[runspacefactory]::CreateRunspace()
+$newRunspace = [runspacefactory]::CreateRunspace()
 $newRunspace.ApartmentState = "STA"
 $newRunspace.ThreadOptions = "ReuseThread"
 $newRunspace.Open()
-$newRunspace.SessionStateProxy.SetVariable("syncHash",$syncHash)
+$newRunspace.SessionStateProxy.SetVariable("syncHash", $syncHash)
 
 #region Assemblies to Load
-$assemblyList = @("PresentationFramework","PresentationCore","WindowsBase")
+$assemblyList = @("PresentationFramework", "PresentationCore", "WindowsBase")
 $assemblyList | Foreach-Object {Add-Type -AssemblyName $_}
 
 # Mahapps Library Asemblies
@@ -141,18 +141,18 @@ $parentCODE = [PowerShell]::Create().AddScript( {
         #Add the tile Click events which read from $scriptRoot\resources\TILES\<TILENAME>\<TILENAME>.add_Click.ps1     
         $syncHash.keys | Where-Object {$_ -like "tile*"} | ForEach-Object {
             $syncHash.($_.ToString()).add_Click( {
-                [System.Object]$sender = $args[0].Name.TrimStart("tile_")
-                Invoke-Expression (Get-Content ($syncHash.scriptRoot + "\resources\TILES\" + $sender + "\" + $sender + ".add_Click.ps1") -Raw )
-            })
+                    [System.Object]$sender = $args[0].Name.TrimStart("tile_")
+                    Invoke-Expression (Get-Content ($syncHash.scriptRoot + "\resources\TILES\" + $sender + "\" + $sender + ".add_Click.ps1") -Raw )
+                })
         }
 
         #Window Close Event
-        $syncHash.mainWindow.Add_Closed({
-            $jobCleanup.Flag = $False
+        $syncHash.mainWindow.Add_Closed( {
+                $jobCleanup.Flag = $False
 
-            #Stop all runspaces
-            $jobCleanup.PowerShell.Dispose()
-        })
+                #Stop all runspaces
+                $jobCleanup.PowerShell.Dispose()
+            })
 
         #endregion EVENTS
 
