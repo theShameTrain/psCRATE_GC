@@ -21,13 +21,11 @@
 	
 	<Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
-
-                    <Rectangle Width="20" Height="20" Fill="White" Margin="5">
-						<Rectangle.OpacityMask>
-							<VisualBrush Visual="{iconPacks:PackIconMaterial EmailOutline}" Stretch="Uniform"/>
-						</Rectangle.OpacityMask>
-					</Rectangle>
-
+			<Rectangle Width="20" Height="20" Fill="White" Margin="5">
+				<Rectangle.OpacityMask>
+					<VisualBrush Visual="{iconPacks:PackIconMaterial EmailOutline}" Stretch="Uniform"/>
+				</Rectangle.OpacityMask>
+			</Rectangle>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
 	
@@ -69,7 +67,6 @@
 			<Controls:ToggleSwitch Name="o365_tog2" Content="Get SendAs Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
 			<Controls:ToggleSwitch Name="o365_tog3" Content="Get SendOnBehalf Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
 			<Controls:ToggleSwitch Name="o365_tog4" Content="Get Calendar Permissions" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-			<Controls:ToggleSwitch Name="o365_tog5" Content="Get TEST" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
 		</StackPanel>
     </Grid>
 	
