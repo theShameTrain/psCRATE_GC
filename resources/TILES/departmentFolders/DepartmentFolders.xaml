@@ -21,13 +21,11 @@
 	
 	<Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
-
-                    <Rectangle Width="20" Height="20" Fill="White" Margin="5">
-						<Rectangle.OpacityMask>
-							<VisualBrush Visual="{iconPacks:PackIconMaterial FolderAccount}" Stretch="Uniform"/>
-						</Rectangle.OpacityMask>
-					</Rectangle>
-
+			<Rectangle Width="20" Height="20" Fill="White" Margin="5">
+				<Rectangle.OpacityMask>
+					<VisualBrush Visual="{iconPacks:PackIconMaterial FolderAccount}" Stretch="Uniform"/>
+				</Rectangle.OpacityMask>
+			</Rectangle>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
 	
