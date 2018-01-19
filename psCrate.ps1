@@ -142,6 +142,7 @@ $parentCODE = [PowerShell]::Create().AddScript( {
         $syncHash.keys | Where-Object {$_ -like "tile*"} | ForEach-Object {
             $syncHash.($_.ToString()).add_Click( {
                     [System.Object]$sender = $args[0].Name.TrimStart("tile_")
+                    $syncHash.tileClicked = $sender
                     Invoke-Expression (Get-Content ($syncHash.scriptRoot + "\resources\TILES\" + $sender + "\" + $sender + ".add_Click.ps1") -Raw )
                 })
         }

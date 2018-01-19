@@ -103,7 +103,7 @@ $PowerShell = [PowerShell]::Create().AddScript({
             
     #Load the XAML from file
     $xamlLoader = (New-Object System.Xml.XmlDocument)
-    $xamlLoader.Load($SyncHash.scriptRoot + "\resources\XML\o365.xaml")
+    $xamlLoader.Load($SyncHash.scriptRoot + "\resources\TILES\" + $SyncHash.tileClicked + "\" + $SyncHash.tileClicked + ".xaml")    
 
     #Load the XAML and catch a failure
     $reader=(New-Object System.Xml.XmlNodeReader $xamlLoader) 
