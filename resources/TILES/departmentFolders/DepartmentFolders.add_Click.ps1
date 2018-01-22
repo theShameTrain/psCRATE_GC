@@ -50,11 +50,15 @@ $PowerShell = [PowerShell]::Create().AddScript({
 
     #endregion FUNCTIONS
 
-    #Load the XAML from file
-    $xamlLoader = (New-Object System.Xml.XmlDocument)
-    #$xamlLoader.Load($SyncHash.scriptRoot + "\resources\XML\DepartmentFolders.xaml")
-    $xamlLoader.Load($SyncHash.scriptRoot + "\resources\TILES\" + $SyncHash.tileClicked + "\" + $SyncHash.tileClicked + ".xaml")    
+    #Load the XAML from file and Replace the ACCENTcolor String from config.xml
+    $configLoader = (New-Object System.Xml.XmlDocument)
+    $configLoader.Load($SyncHash.scriptRoot + "\resources\TILES\" + $syncHash.tileClicked + "\" + "config.xml")
+    $xamlText = Get-Content ($SyncHash.scriptRoot + "\resources\TILES\" + $syncHash.tileClicked + "\" + $syncHash.tileClicked + ".xaml")
+    $xamlText = $xamlText -replace "ACCENTcolor", $configLoader.tile.accent
 
+    $xamlLoader = (New-Object System.Xml.XmlDocument)
+    $xamlLoader.LoadXml($xamlText)
+    
     #Load the XAML and catch a failure
     $reader=(New-Object System.Xml.XmlNodeReader $xamlLoader) 
     $SyncHash.DepartmentFolders_Window = [Windows.Markup.XamlReader]::Load($reader)
