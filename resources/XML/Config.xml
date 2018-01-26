@@ -9,7 +9,7 @@
 		<emailSuffix>@youremail.suffix.com</emailSuffix>
 	</o365>
 	<deptfolders>
-		<deptRoot>\\UNCpath\toselfservicefolders</deptRoot>
+		<deptRoot>\\UNCpath\to\self\service\folders</deptRoot>
 		<shareLevel>5</shareLevel>
 	</deptfolders>
 </Settings>

@@ -1,8 +1,17 @@
-<tile>
-	<name>DepartmentFolders</name>
-	<width>200</width>
-	<height>100</height>
-	<title>Department Folders</title>
-	<accent>Teal</accent>
-	<icon>Material FolderAccount</icon>
-</tile>
+<settings>
+	<tile>
+		<name>DepartmentFolders</name>
+		<width>200</width>
+		<height>100</height>
+		<title>Department Folders</title>
+		<accent>Teal</accent>
+		<icon>Material FolderAccount</icon>
+	</tile>
+	<vars>
+		<deptRoot>\\bafileadm01\Departments</deptRoot>
+		<mapDrive>T:</mapDrive>
+		<shareLevel>5</shareLevel>
+		<deptShortList>DepartmentShortNames.txt</deptShortList>
+		<searchRoot>OU=Departments,OU=Georgian,DC=admin,DC=georgianc,DC=on,DC=ca</searchRoot>
+	</vars>
+</settings>
