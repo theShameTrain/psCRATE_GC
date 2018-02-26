@@ -1,6 +1,6 @@
 # DepartmantFolder TILE Overview
 
-This tile allows regular users to create controlled access folders or view the manager of existing controlled access folders and associated groups.  The folders are accessed via membership in AD groups that are managed by a department user.  The script creates the folder and the associated groups and also assigns the primary manager for the groups.
+This tile allows regular users to create controlled access folders or view the manager of existing controlled access folders and associated groups.  The folders are accessed via membership in AD groups that are managed by a department user.  The script creates the folder and the associated groups, assigns those groups to the Department Read Only Master Group and also assigns the primary manager for the groups.
 
 ### Settings
 Settings are located in \resources\TILES\\***TILE***\\Config.xml
