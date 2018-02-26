@@ -8,10 +8,10 @@
 		<icon>Material FolderAccount</icon>
 	</tile>
 	<vars>
-		<deptRoot>\\bafileadm01\Departments</deptRoot>
+		<deptRoot>\\UNCPathTo\Departments</deptRoot>
 		<mapDrive>T:</mapDrive>
 		<shareLevel>5</shareLevel>
 		<deptShortList>DepartmentShortNames.txt</deptShortList>
-		<searchRoot>OU=Departments,OU=Georgian,DC=admin,DC=georgianc,DC=on,DC=ca</searchRoot>
+		<searchRoot>OU=Departments,OU=Your,DC=Local,DC=Site</searchRoot>
 	</vars>
 </settings>

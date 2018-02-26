@@ -7,4 +7,9 @@
 		<accent>Orange</accent>
 		<icon>Material EmailOutline</icon>
 	</tile>
+	<vars>
+		<msolUser>user.name@YourSite.onmicrosoft.com</msolUser>
+		<encPassword>AESencryptedPassword</encPassword>
+		<emailSuffix>@YourEmailSuffix.com</emailSuffix>
+	</vars>
 </settings>

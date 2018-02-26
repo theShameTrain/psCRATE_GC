@@ -1,65 +1,38 @@
 #Disable the tile when the runspace is open
-$SyncHash.tile_o365.IsEnabled = $false 
-        
+$SyncHash.("tile_" + $SyncHash.tileClicked).IsEnabled = $false 
+
+#Create a variable for the path to the tile
+$tilePath = Join-Path -Path $syncHash.scriptRoot -ChildPath ("\resources\Tiles\" + $tileName + "\")
+
+#Load the Tile Config.xml
+#for testing use external config file
+[xml]$tileConfig = Get-Content ("c:\config\$tileName\Config.xml")
+#unremark the following line to enable config in resources
+#[xml]$tileConfig = Get-Content ($tilePath + "config.xml")
+
 #Add the AzureAD module (msonline) to the runspace
 Import-Module "msonline"
 
 #Get the connection credentials
 If (!$SyncHash.cred) {
     $key = Get-Content ($SyncHash.config.Settings.general.keyStore + "\AESkey.aes")
-    $SyncHash.msolCred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $SyncHash.config.Settings.o365.msolUser, ($SyncHash.config.Settings.o365.encPassword | ConvertTo-SecureString -Key $key)
+    $SyncHash.msolCred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $tileConfig.settings.vars.msolUser, ($tileConfig.settings.vars.encPassword | ConvertTo-SecureString -Key $key)
 }
 
 #Connect to AzureAD
 Connect-MsolService -Credential $SyncHash.msolCred
 
-$newRunspace =[runspacefactory]::CreateRunspace()
+$newRunspace = [runspacefactory]::CreateRunspace()
 $newRunspace.ApartmentState = "STA"
 $newRunspace.ThreadOptions = "ReuseThread"          
 $newRunspace.Open()
-$newRunspace.SessionStateProxy.SetVariable("SyncHash",$SyncHash) 
+$newRunspace.SessionStateProxy.SetVariable("SyncHash", $SyncHash) 
 $PowerShell = [PowerShell]::Create().AddScript( {
     
-        #region FUNCTIONS        
-        #region Update Window Function
-        Function Update-Window {
-            Param (
-                $Control,
-                $Property,
-                $Value,
-                [switch]$AppendContent
-            )
-
-            # This is kind of a hack, there may be a better way to do this
-            If ($Property -eq "Close") {
-                $syncHash.Window.Dispatcher.invoke([action] {$syncHash.Window.Close()}, "Normal")
-                Return
-            }
-
-            # This updates the control based on the parameters passed to the function
-            $syncHash.$Control.Dispatcher.Invoke([action] {
-                    # This bit is only really meaningful for the TextBox control, which might be useful for logging progress steps
-                    If ($PSBoundParameters['AppendContent']) {
-                        $syncHash.$Control.AppendText($Value)
-                    } 
-                    Else {
-                        $syncHash.$Control.$Property = $Value
-                    }
-                }, "Normal")
-        }
-        #endregion Update Window Function  
-            
-        function close-SplashScreen () {
-            $hash.WindowSplash.Dispatcher.Invoke("Normal", [action] { $hash.WindowSplash.close() })
-            $Pwshell.EndInvoke($handle) | Out-Null
-            #$runspace.Close() | Out-Null
-        }
-
-        function Start-SplashScreen {
-            $Pwshell.Runspace = $runspace
-            $script:handle = $Pwshell.BeginInvoke() 
-        }
-
+        #region FUNCTIONS
+        
+        #Import Functions from Modules
+        Get-ChildItem ($SyncHash.scriptRoot + "\resources\MODULES" ) | ForEach-Object {Import-Module -Name $_.FullName}
         #endregion FUNCTIONS
 
         #region SplashScreen
@@ -123,14 +96,14 @@ $PowerShell = [PowerShell]::Create().AddScript( {
         #region EVENTS
     
         #o365 Window Loaded
-        $syncHash.o365_Window.Add_Loaded( {
+        $syncHash.o365_Window.Add_Loaded( { 
                 close-SplashScreen
             })
 
         #Open the Flyout when the toggle is switched on and disable the Grid to prevent multiple toggles being selected
         $toggles = $syncHash.Keys | Where-Object {$_ -like "o365_tog*"}
         $toggles | ForEach-Object {
-            $syncHash.$_.add_Checked( {
+            $syncHash.$_.add_Checked( { 
                     $SyncHash.o365_FlyOutContent.Visibility = "Visible"
                     $SyncHash.o365_gridSwitches.IsEnabled = $false 
                 })
@@ -241,7 +214,6 @@ $PowerShell = [PowerShell]::Create().AddScript( {
 
                     if ($syncHash.o365_tog4.IsChecked) {
                         #Get Calendar Permissions
-                
                         $results = Get-MailboxFolderPermission -Identity ($syncHash.o365_tb_UPN.Text + ":\Calendar")
 
                         if (!$results) {
@@ -277,7 +249,7 @@ $PowerShell = [PowerShell]::Create().AddScript( {
                 $SyncHash.o365_FlyOutContent.Visibility = "Collapsed"
                 
                 $o365Toggles = $syncHash.Keys | Where-Object {$_ -like "o365_tog*"} 
-                $o365Toggles | % {$syncHash.$_.IsChecked = $false}
+                $o365Toggles | ForEach-Object {$syncHash.$_.IsChecked = $false}
                 
                 #$SyncHash.o365_tog1.IsEnabled = $True
                 #$SyncHash.o365_tog1.IsChecked = $false
@@ -292,7 +264,7 @@ $PowerShell = [PowerShell]::Create().AddScript( {
                 #Re-enable the tile when the Runspace closes
                 Update-Window -control tile_o365 -property IsEnabled -value $true 
                 $o365items = $syncHash.Keys | Where-Object {$_ -like "o365*"} 
-                $o365items | % {$syncHash.Remove($_)}
+                $o365items | ForEach-Object {$syncHash.Remove($_)}
             })
 
         #endregion EVENTS
@@ -303,9 +275,9 @@ $PowerShell = [PowerShell]::Create().AddScript( {
 
 $PowerShell.Runspace = $newRunspace
 [void]$Jobs.Add((
-    [pscustomobject]@{
-        PowerShell = $PowerShell
-        Runspace = $PowerShell.BeginInvoke()
-    }
-))
+        [pscustomobject]@{
+            PowerShell = $PowerShell
+            Runspace   = $PowerShell.BeginInvoke()
+        }
+    ))
         

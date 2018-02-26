@@ -3,13 +3,4 @@
 	<general>
 		<keyStore>c:\keyStore</keyStore>
 	</general>
-	<o365>
-		<msolUser>service.accountName@organization.onmicrosoft.com</msolUser>
-		<encPassword>encryptedStringfromAESencryption=</encPassword>
-		<emailSuffix>@youremail.suffix.com</emailSuffix>
-	</o365>
-	<deptfolders>
-		<deptRoot>\\UNCpath\to\self\service\folders</deptRoot>
-		<shareLevel>5</shareLevel>
-	</deptfolders>
 </Settings>
