@@ -89,7 +89,7 @@
     <Grid Name="DepartmentFolders_gridSwitches" HorizontalAlignment="Left">
 		<StackPanel Orientation="Vertical">
 			<Controls:ToggleSwitch Name="DepartmentFolders_tog1" Content="Get Self Service Folder Manager" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-			<Controls:ToggleSwitch Name="DepartmentFolders_tog2" Content="Create Service Folder" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+			<Controls:ToggleSwitch Name="DepartmentFolders_tog2" Content="Create Self Service Folder" Width="350" HorizontalAlignment="Left" Margin="10,0,0,0"/>
 		</StackPanel>
     </Grid>
 	
