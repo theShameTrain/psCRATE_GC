@@ -28,3 +28,6 @@ Settings are located in \resources\TILES\\***TILE***\\Config.xml
 
 + Get Self Service Folder Manager
 + Create Self Service Folder
+
+### Department Folders Structure Overview
+![SelfService Folders Overview](Self%20Service%20Folder%20Structure.png?raw=true "Department Folders Structure Overview")
